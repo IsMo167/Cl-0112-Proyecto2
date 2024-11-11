@@ -37,7 +37,7 @@ public class pruebas {
         lista.mostrarLista();
 
         //Insertar varios elementos más:
-        lista.insertar("Segundo");
+        lista.insertar(true);
         lista.insertar("Primero");
         lista.mostrarLista();
 
@@ -47,13 +47,13 @@ public class pruebas {
         System.out.println();
 
         //Eliminar elementos
-        // lista.eliminar("Primero");
-        // lista.mostrarLista();
+        lista.eliminar("Primero");
+        lista.mostrarLista();
 
         // lista.eliminar("Segundo");
         // lista.mostrarLista();
 
-        lista.eliminar("Tercero");
-        lista.mostrarLista();
+        // lista.eliminar("Tercero");
+        // lista.mostrarLista();
     }
 }

@@ -69,20 +69,24 @@ public class Lista{
          * Es que opero sobre nodos temporales creados, pero nunca hago referencia a la lista original. 
          * No debería hacer algo como this.cabeza.setSiguiente(siguiente)?
          */
-        Nodo temporal = this.cabeza;
-        Nodo siguiente = temporal.getSiguiente();
-        int contador = 0;
+        else{
 
-        while(siguiente.getValor() != valor){
-            System.out.println("Temporal está en la posición: " + contador);
-            mostrarLista();
-            temporal = temporal.getSiguiente();
-            siguiente = temporal.getSiguiente();
-            contador ++;
+        
+            Nodo temporal = this.cabeza;
+            Nodo siguiente = temporal.getSiguiente();
+            //int contador = 0;
+
+            while(siguiente.getValor() != valor){
+                //System.out.println("Temporal está en la posición: " + contador);
+                //mostrarLista();
+                temporal = temporal.getSiguiente();
+                siguiente = temporal.getSiguiente();
+                //contador ++;
+            }
+            temporal.setSiguiente(
+                                (siguiente == null)? null: siguiente.getSiguiente()
+                                );
         }
-        temporal.setSiguiente(
-                             (siguiente == null)? null: siguiente.getSiguiente()
-                             );
     }
 
     //Método para mostrar la lista
