@@ -62,33 +62,20 @@ public class Lista{
         if(this.cabeza.getValor() == valor){
             this.cabeza = this.cabeza.getSiguiente();
         }
-
         //Si el objeto no está en la cabeza: (asumimos que el objeto está)
-        /**
-         * Por qué esto funciona? No debería enlazar la cabeza a siguiente?
-         * Es que opero sobre nodos temporales creados, pero nunca hago referencia a la lista original. 
-         * No debería hacer algo como this.cabeza.setSiguiente(siguiente)?
-         */
         else{
-
-        
             Nodo temporal = this.cabeza;
             Nodo siguiente = temporal.getSiguiente();
-            //int contador = 0;
-
             while(siguiente.getValor() != valor){
-                //System.out.println("Temporal está en la posición: " + contador);
-                //mostrarLista();
                 temporal = temporal.getSiguiente();
                 siguiente = temporal.getSiguiente();
-                //contador ++;
             }
             temporal.setSiguiente(
-                                (siguiente == null)? null: siguiente.getSiguiente()
-                                );
+                                 //Si el siguiente no existe, enlazar a null, si sí existe, enlazar al siguiente de siguiente
+                                 (siguiente == null)? null: siguiente.getSiguiente()
+                                 );
         }
     }
-
     //Método para mostrar la lista
     public void mostrarLista(){
         int contador = 0;
