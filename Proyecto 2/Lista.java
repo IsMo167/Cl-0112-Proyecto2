@@ -5,23 +5,87 @@
  * https://www.youtube.com/watch?v=WmVMRweAp7E
  */
 public class Lista{
-    //Defino los atributos
+    //Atributos:
     private Nodo cabeza;
 
-    //Constructor #1: Creo la lista vacía
+    //Método Constructor:
     public Lista(){
         cabeza = null;
     }
-    //Insertar #1: Inserto un valor al inicio de la lista
-    public void insertarValor(Object valor){
-        if (this.cabeza == null){
+
+    //Setters y getters:
+    public Nodo getCabeza(){
+        return this.cabeza;
+    }
+    public void setCabeza(Nodo cabeza){
+        this.cabeza = cabeza;
+    }
+
+    //Método de Insertar:
+    public void insertar(Object valor){     //Note que insertamos valores, no nodos
+        if (this.cabeza == null){   //Si la lista está vacía:
             this.cabeza = new Nodo(valor);
         }
-        else{
-            Nodo nuevaCabeza = new Nodo(valor, this.cabeza);
-            this.cabeza = nuevaCabeza;
+        else{   //Si ya hay una cabeza en la lista:
+            Nodo nuevaCabeza = new Nodo(valor);     //Creo la nueva cabeza
+            nuevaCabeza.setSiguiente(this.cabeza);      //La enlazo a la cabeza actual
+            this.cabeza = nuevaCabeza;      //Redefino la nueva cabeza
         }
     }
+    //Método de Buscar:
+    public boolean buscar(Object valor){
+        boolean seEncuentra = false;
+        if(this.cabeza != null){    //1. Si la cabeza no está vacía
+            Nodo nodoActual = this.cabeza;
+            while(nodoActual != null){
+                if (nodoActual.getValor() == valor){
+                    seEncuentra = true;
+                    return seEncuentra;
+                }
+                else{
+                    nodoActual = nodoActual.getSiguiente();
+                }
+            }
+        }
+        return seEncuentra;     //2. Else: return false
+    }
+
+    //Método de eliminar:
+    /**
+     * Los métodos debe realizar una única tarea. Para eliminar un valor de la lista, 
+     * yo necesito comprobar que el valor se encuentre y que la lista no sea vacía. 
+     * Eso lo compruebo dentro del método eliminar, o en el main antes de llamar al método eliminar?
+     * 
+     */
+    public void eliminar(Object valor){ //Queremos eliminar el 3 de: 1->2->3->4
+        //Si el objeto es la cabeza:
+        if(this.cabeza.getValor() == valor){
+            this.cabeza = this.cabeza.getSiguiente();
+        }
+
+        //Si el objeto no está en la cabeza: (asumimos que el objeto está)
+        /**
+         * Por qué esto funciona? No debería enlazar la cabeza a siguiente?
+         * Es que opero sobre nodos temporales creados, pero nunca hago referencia a la lista original. 
+         * No debería hacer algo como this.cabeza.setSiguiente(siguiente)?
+         */
+        Nodo temporal = this.cabeza;
+        Nodo siguiente = temporal.getSiguiente();
+        int contador = 0;
+
+        while(siguiente.getValor() != valor){
+            System.out.println("Temporal está en la posición: " + contador);
+            mostrarLista();
+            temporal = temporal.getSiguiente();
+            siguiente = temporal.getSiguiente();
+            contador ++;
+        }
+        temporal.setSiguiente(
+                             (siguiente == null)? null: siguiente.getSiguiente()
+                             );
+    }
+
+    //Método para mostrar la lista
     public void mostrarLista(){
         int contador = 0;
         Nodo nodoTemporal = this.cabeza;

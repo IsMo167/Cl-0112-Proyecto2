@@ -4,7 +4,7 @@ import java.awt.*;
 public class Interfaz extends JFrame {
     public Interfaz() {
         // Configuración del JFrame
-        setTitle("Laboratorio 3");
+        setTitle("Proyecto #2");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 800);
         setLocationRelativeTo(null); // Centra la ventana en la pantalla
