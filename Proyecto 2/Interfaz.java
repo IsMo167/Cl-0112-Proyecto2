@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Interfaz extends JFrame {
     public Interfaz() {
@@ -39,6 +41,17 @@ public class Interfaz extends JFrame {
 
         // Agregar el panel al frame
         add(panel);
+
+        // //Agregar el funcionamiento a los botones:
+        // botonCrear.addActionListener(e -> {
+        //       Lista lista = new Lista();
+        //   });
+        // boton.addActionListener(e -> {
+            
+        // });
+        // boton.addActionListener(e -> {
+            
+        // });
     }
 
     public static void main(String[] args) {

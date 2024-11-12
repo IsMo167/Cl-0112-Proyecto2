@@ -23,44 +23,32 @@ public class pruebas {
         // System.out.println("Nodo 3:");
         // nodo3.imprimirNodo();
 
-        // /**
-        //  * Prueba de lista:
-        //  */
+        /**
+         * Prueba de lista:
+         */
 
-        // //Crear lista
-        // Lista lista = new Lista();      //Lista vacía
-
-        // //Insertar cabeza:
-        // lista.insertar("Tercero");
-
-        // //Mostrar lista:
-        // lista.mostrarLista();
-
-        // //Insertar varios elementos más:
-        // lista.insertar("Segundo");
-        // lista.insertar("Primero");
-        // lista.mostrarLista();
+        
 
         // //Buscar elementos
         // System.out.println(lista.buscar("Primero"));
         // System.out.println(lista.buscar("Hola"));
         // System.out.println();
 
-        // /**
-        //  * Prueba de eliminar elementos de una lista
-        //  */
         
-        // Lista lista2 = new Lista();     //Creo la lista
+        // Lista lista2 = new Lista();     //Creo lista vacía
 
-        // lista2.insertar(6);     //Inserto los elementos:
-        // lista2.insertar(5);
-        // lista2.insertar(4);
-        // lista2.insertar(3);
-        // lista2.insertar(2);
-        // lista2.insertar(1);
-        // lista2.insertar(0);
+        // lista2.insertar("6");     //Inserto los elementos:
+        // lista2.insertar("5");
+        // lista2.insertar("4");
+        // lista2.insertar("3");
+        // lista2.insertar("2");
+        // lista2.insertar("1");
+        // lista2.insertar("0");
         
-        // lista2.mostrarLista();
+        // boolean listaVacia = lista2.vacia();
+        // System.out.println(listaVacia);
+        // String textList = lista2.mostrar(listaVacia);
+        // System.out.println(textList);
 
         // lista2.eliminar(0);     //Elimino la cabeza
         // lista2.mostrarLista();
@@ -70,5 +58,6 @@ public class pruebas {
 
         // lista2.eliminar(6);     //Elimino el último elemento
         // lista2.mostrarLista();
+
     }
 }

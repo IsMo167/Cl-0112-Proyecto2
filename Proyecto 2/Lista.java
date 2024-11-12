@@ -22,7 +22,7 @@ public class Lista{
     }
 
     //Método de Insertar:
-    public void insertar(Object valor){     //Note que insertamos valores, no nodos
+    public void insertar(String valor){     //Note que insertamos valores, no nodos
         if (this.cabeza == null){   //Si la lista está vacía:
             this.cabeza = new Nodo(valor);
         }
@@ -33,12 +33,12 @@ public class Lista{
         }
     }
     //Método de Buscar:
-    public boolean buscar(Object valor){
+    public boolean buscar(String valor){
         boolean seEncuentra = false;
         if(this.cabeza != null){    //1. Si la cabeza no está vacía
             Nodo nodoActual = this.cabeza;
             while(nodoActual != null){
-                if (nodoActual.getValor() == valor){
+                if (nodoActual.getValor().equals(valor)){
                     seEncuentra = true;
                     return seEncuentra;
                 }
@@ -50,23 +50,17 @@ public class Lista{
         return seEncuentra;     //2. Else: return false
     }
 
-    //Método de eliminar:
-    /**
-     * Los métodos debe realizar una única tarea. Para eliminar un valor de la lista, 
-     * yo necesito comprobar que el valor se encuentre y que la lista no sea vacía. 
-     * Eso lo compruebo dentro del método eliminar, o en el main antes de llamar al método eliminar?
-     * 
-     */
-    public void eliminar(Object valor){ //Queremos eliminar el 3 de: 1->2->3->4
+    //Método de Eliminar:
+    public void eliminar(String valor){ //Queremos eliminar el 3 de: 1->2->3->4
         //Si el objeto es la cabeza:
-        if(this.cabeza.getValor() == valor){
+        if(this.cabeza.getValor().equals(valor)){
             this.cabeza = this.cabeza.getSiguiente();
         }
         //Si el objeto no está en la cabeza: (asumimos que el objeto está)
         else{
             Nodo temporal = this.cabeza;
             Nodo siguiente = temporal.getSiguiente();
-            while(siguiente.getValor() != valor){
+            while(!siguiente.getValor().equals(valor)){
                 temporal = temporal.getSiguiente();
                 siguiente = temporal.getSiguiente();
             }
@@ -76,15 +70,28 @@ public class Lista{
                                  );
         }
     }
-    //Método para mostrar la lista
-    public void mostrarLista(){
-        int contador = 0;
-        Nodo nodoTemporal = this.cabeza;
-        while(nodoTemporal != null){
-            System.out.println(contador + ": " + nodoTemporal.getValor());
-            contador ++ ;
-            nodoTemporal = nodoTemporal.getSiguiente();
+    //Método para comprobar si la lista está vacía o no:
+    public boolean vacia(){
+        boolean listaVacia = (this.cabeza == null)? true : false;
+        return listaVacia;
+    }
+
+    //Método para mostrar la lista:
+    public String mostrar(boolean listaVacia){
+        String textList = "";
+        if(listaVacia){
+            textList += "La lista se encuentra vacía.";
         }
-        System.out.println("-------------------------------\n");
+        else{
+            textList += this.cabeza.getValor();
+
+            Nodo nodoTemporal = this.cabeza.getSiguiente();
+            while(nodoTemporal != null){
+                textList += "  ->  ";
+                textList += nodoTemporal.getValor();
+                nodoTemporal = nodoTemporal.getSiguiente();
+            }
+        }
+        return(textList);
     }
 }

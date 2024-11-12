@@ -1,10 +1,10 @@
 public class Nodo {
     // Atributos de la clase Nodo
-    private Object valor;        // El valor que guarda el nodo
+    private String valor;        // El valor que guarda el nodo
     private Nodo siguiente;   // Referencia al siguiente nodo
     
     // Constructor de la clase Nodo
-    public Nodo(Object valor) {
+    public Nodo(String valor) {
         this.valor = valor;  // Inicializa el valor del nodo
         this.siguiente = null; // Inicializa el siguiente nodo como null
     }
@@ -14,7 +14,7 @@ public class Nodo {
         return this.valor;
     }
     
-    public void setValor(Object valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
     
