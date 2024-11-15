@@ -1,9 +1,9 @@
 //Referencia: https://javarush.com/es/groups/posts/es.3111.estructuras-de-datos-rbol-binario-en-java
-public class Arbol {
+public class Arbol { //Clase árbol
     private NodoArbol nodoRaiz;
 
     public Arbol() {
-        nodoRaiz = null;
+        nodoRaiz = null; //Se inicializa en null
     }
 
     // Insertar un nuevo nodo en el árbol
@@ -17,17 +17,17 @@ public class Arbol {
     }
 
     private void insertarRecursivamente(NodoArbol nodoActual, NodoArbol nuevoNodo) {
-        if (nuevoNodo.obtenerValor() < nodoActual.obtenerValor()) {
-            if (nodoActual.obtenerHijoIzquierdo() == null) {
-                nodoActual.establecerHijoIzquierdo(nuevoNodo);
+        if (nuevoNodo.getValor() < nodoActual.getValor()) {
+            if (nodoActual.getHijoIzquierdo() == null) {
+                nodoActual.setHijoIzquierdo(nuevoNodo);
             } else {
-                insertarRecursivamente(nodoActual.obtenerHijoIzquierdo(), nuevoNodo);
+                insertarRecursivamente(nodoActual.getHijoIzquierdo(), nuevoNodo);
             }
-        } else if (nuevoNodo.obtenerValor() > nodoActual.obtenerValor()) {
-            if (nodoActual.obtenerHijoDerecho() == null) {
-                nodoActual.establecerHijoDerecho(nuevoNodo);
+        } else if (nuevoNodo.getValor() > nodoActual.getValor()) {
+            if (nodoActual.getHijoDerecho() == null) {
+                nodoActual.setHijoDerecho(nuevoNodo);
             } else {
-                insertarRecursivamente(nodoActual.obtenerHijoDerecho(), nuevoNodo);
+                insertarRecursivamente(nodoActual.getHijoDerecho(), nuevoNodo);
             }
         }
     }
@@ -38,13 +38,13 @@ public class Arbol {
     }
 
     private NodoArbol encontrarNodoPorValorRecursivamente(NodoArbol nodoActual, int valor) {
-        if (nodoActual == null || nodoActual.obtenerValor() == valor) {
+        if (nodoActual == null || nodoActual.getValor() == valor) {
             return nodoActual;
         }
-        if (valor < nodoActual.obtenerValor()) {
-            return encontrarNodoPorValorRecursivamente(nodoActual.obtenerHijoIzquierdo(), valor);
+        if (valor < nodoActual.getValor()) {
+            return encontrarNodoPorValorRecursivamente(nodoActual.getHijoIzquierdo(), valor);
         } else {
-            return encontrarNodoPorValorRecursivamente(nodoActual.obtenerHijoDerecho(), valor);
+            return encontrarNodoPorValorRecursivamente(nodoActual.getHijoDerecho(), valor);
         }
     }
 
@@ -59,28 +59,28 @@ public class Arbol {
             return null;
         }
 
-        if (valor < nodoActual.obtenerValor()) {
-            nodoActual.establecerHijoIzquierdo(eliminarNodoRecursivamente(nodoActual.obtenerHijoIzquierdo(), valor));
-        } else if (valor > nodoActual.obtenerValor()) {
-            nodoActual.establecerHijoDerecho(eliminarNodoRecursivamente(nodoActual.obtenerHijoDerecho(), valor));
+        if (valor < nodoActual.getValor()) {
+            nodoActual.setHijoIzquierdo(eliminarNodoRecursivamente(nodoActual.getHijoIzquierdo(), valor));
+        } else if (valor > nodoActual.getValor()) {
+            nodoActual.setHijoDerecho(eliminarNodoRecursivamente(nodoActual.getHijoDerecho(), valor));
         } else {
             // Nodo encontrado
-            if (nodoActual.obtenerHijoIzquierdo() == null) {
-                return nodoActual.obtenerHijoDerecho();
-            } else if (nodoActual.obtenerHijoDerecho() == null) {
-                return nodoActual.obtenerHijoIzquierdo();
+            if (nodoActual.getHijoIzquierdo() == null) {
+                return nodoActual.getHijoDerecho();
+            } else if (nodoActual.getHijoDerecho() == null) {
+                return nodoActual.getHijoIzquierdo();
             } else {
-                NodoArbol minimoNodoDerecho = encontrarMinimo(nodoActual.obtenerHijoDerecho());
-                nodoActual.establecerValor(minimoNodoDerecho.obtenerValor());
-                nodoActual.establecerHijoDerecho(eliminarNodoRecursivamente(nodoActual.obtenerHijoDerecho(), minimoNodoDerecho.obtenerValor()));
+                NodoArbol minimoNodoDerecho = encontrarMinimo(nodoActual.getHijoDerecho());
+                nodoActual.setValor(minimoNodoDerecho.getValor());
+                nodoActual.setHijoDerecho(eliminarNodoRecursivamente(nodoActual.getHijoDerecho(), minimoNodoDerecho.getValor()));
             }
         }
         return nodoActual;
     }
 
     private NodoArbol encontrarMinimo(NodoArbol nodo) {
-        while (nodo.obtenerHijoIzquierdo() != null) {
-            nodo = nodo.obtenerHijoIzquierdo();
+        while (nodo.getHijoIzquierdo() != null) {
+            nodo = nodo.getHijoIzquierdo();
         }
         return nodo;
     }
@@ -111,14 +111,14 @@ public class Arbol {
             while (!pilaGlobal.estaVacia()) {
                 NodoArbol nodoTemp = pilaGlobal.desapilar();
                 if (nodoTemp != null) {
-                    System.out.print(nodoTemp.obtenerValor());
-                    pilaLocal.apilar(nodoTemp.obtenerHijoIzquierdo());
-                    pilaLocal.apilar(nodoTemp.obtenerHijoDerecho());
-                    if (nodoTemp.obtenerHijoIzquierdo() != null || nodoTemp.obtenerHijoDerecho() != null) {
+                    System.out.print(nodoTemp.getValor());
+                    pilaLocal.apilar(nodoTemp.getHijoIzquierdo());
+                    pilaLocal.apilar(nodoTemp.getHijoDerecho());
+                    if (nodoTemp.getHijoIzquierdo() != null || nodoTemp.getHijoDerecho() != null) {
                         filaVacia = false;
                     }
                 } else {
-                    System.out.print("__");
+                    System.out.print("null");
                     pilaLocal.apilar(null);
                     pilaLocal.apilar(null);
                 }

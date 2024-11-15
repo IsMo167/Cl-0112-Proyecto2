@@ -1,4 +1,5 @@
-public class Nodo {
+public class Nodo { //Cambiarlo a  NodoLista
+    
     // Atributos de la clase Nodo
     private String valor;        // El valor que guarda el nodo
     private Nodo siguiente;   // Referencia al siguiente nodo

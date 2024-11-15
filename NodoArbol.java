@@ -12,36 +12,36 @@ public class NodoArbol {
     }
 
     // Métodos para obtener el valor
-    public int obtenerValor() {
+    public int getValor() {
         return this.valor;
     }
 
     // Métodos para establecer el valor
-    public void establecerValor(int valor) {
+    public void setValor(int valor) {
         this.valor = valor;
     }
 
     // Métodos para obtener el hijo izquierdo
-    public NodoArbol obtenerHijoIzquierdo() {
+    public NodoArbol getHijoIzquierdo() {
         return this.hijoIzquierdo;
     }
 
     // Métodos para establecer el hijo izquierdo
-    public void establecerHijoIzquierdo(NodoArbol hijoIzquierdo) {
+    public void setHijoIzquierdo(NodoArbol hijoIzquierdo) {
         this.hijoIzquierdo = hijoIzquierdo;
     }
 
     // Métodos para obtener el hijo derecho
-    public NodoArbol obtenerHijoDerecho() {
+    public NodoArbol getHijoDerecho() {
         return this.hijoDerecho;
     }
 
     // Métodos para establecer el hijo derecho
-    public void establecerHijoDerecho(NodoArbol hijoDerecho) {
+    public void setHijoDerecho(NodoArbol hijoDerecho) {
         this.hijoDerecho = hijoDerecho;
     }
 
-    // Método para imprimir el nodo (opcional)
+    // Método para imprimir el nodo 
     public void imprimirNodo() {
         System.out.println("Nodo seleccionado con valor: " + this.valor);
     }

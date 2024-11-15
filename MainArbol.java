@@ -22,15 +22,15 @@ public class MainArbol {
         arbol.imprimirArbol();
 
         // Eliminar un nodo
-        System.out.println("\nEliminando el nodo con valor 5...");
+        System.out.println("\nEliminando el nodo con valor..."); //Hacerlo interactivo, no quemado
         arbol.eliminarNodo(5);
 
         // Imprimir el árbol después de la eliminación
-        System.out.println("\nÁrbol después de eliminar el nodo 5:");
+        System.out.println("\nÁrbol después de eliminar el nodo :"); //Hacerlo interactivo, no quemado
         arbol.imprimirArbol();
 
         // Buscar un nodo por su valor
-        System.out.println("\nBuscando el nodo con valor 7...");
+        System.out.println("\nBuscando el nodo con valor...");
         NodoArbol nodoEncontrado = arbol.encontrarNodoPorValor(7);
         if (nodoEncontrado != null) {
             nodoEncontrado.imprimirNodo();

@@ -35,7 +35,7 @@ public class Pila {
         return nodo;
     }
 
-    // Método para ver el nodo en la cima de la pila (peek)
+    // Método para ver el nodo en la cima de la pila 
     public NodoArbol cima() {
         return estaVacia() ? null : cima.nodo;
     }
