@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
 //https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html
 
 public class Interfaz2 extends JFrame {//Heredo la clase JFrame
@@ -33,7 +36,7 @@ public class Interfaz2 extends JFrame {//Heredo la clase JFrame
         panelLista.setLayout(new BoxLayout(panelLista, BoxLayout.Y_AXIS));  //Cómo se organizará la distribución de los elementos
 
         //Defino mis elementos del panel:
-        JButton botonInsertar = new JButton("Insertar");    
+        JButton botonInsertar = new JButton("Insertar");   
         JTextField campoInsertar = new JTextField();
 
         JButton botonBuscar = new JButton("Buscar");
@@ -47,6 +50,22 @@ public class Interfaz2 extends JFrame {//Heredo la clase JFrame
             //Configuraciones del JTextPane 'panelMostrar'
             panelMostrar.setEditable(false);
             panelMostrar.setText("La lista se encuentra vacía.");
+
+        JButton[] botones = {botonInsertar, botonBuscar, botonEliminar};
+        Color[] coloresFondo = {Color.GREEN, Color.BLUE, Color.RED}; // Colores de fondo
+        Color[] coloresTexto = {Color.BLACK, Color.WHITE, Color.WHITE}; // Colores de texto
+        
+        for (int i = 0; i < botones.length; i++) {
+            // Cambiar el tamaño del botón
+            botones[i].setPreferredSize(new Dimension(100, 50));
+            // Cambiar la fuente del texto
+            botones[i].setFont(new Font("Times New Roman", Font.BOLD, 18));
+            // Cambiar el color de fondo y el color del texto
+            botones[i].setBackground(coloresFondo[i]);
+            botones[i].setForeground(coloresTexto[i]);
+            // Agregar el botón al panel
+            panelLista.add(botones[i]);
+        }
 
         //Ligo los botones y los espacios a 'panelLista'
         panelLista.add(botonInsertar);
