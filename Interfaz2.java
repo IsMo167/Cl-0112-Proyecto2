@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileWriter;
-import java.io.IOException;
 //https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html
 
 public class Interfaz2 extends JFrame {//Heredo la clase JFrame
@@ -10,7 +8,7 @@ public class Interfaz2 extends JFrame {//Heredo la clase JFrame
 
         //Configuración del JFrame
         setTitle("Proyecto #2");                    //Título
-        setSize(1000, 800);                  //Dimensiones(ancho y alto)
+        setSize(750, 550);                  //Dimensiones(ancho y alto)
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //Comportamiento de salida
         setLocationRelativeTo(null);                    //Centro la ventana en la pantalla
 
@@ -20,10 +18,24 @@ public class Interfaz2 extends JFrame {//Heredo la clase JFrame
             JMenu menuLista = new JMenu("Lista");   //Opción para trabajar con listas
             JMenu menuArbol = new JMenu("Árbol");   //Opción para trabajar con árboles
 
+            Color[] coloresTextoMenus = {Color.BLUE, Color.BLUE}; // Colores de texto
+
+            JMenu [] menus = {menuLista, menuArbol};
+            for (int i = 0; i < menus.length; i++) {
+                // Cambiar el tamaño del menu
+                menus[i].setPreferredSize(new Dimension(50, 25));
+                // Cambiar la fuente del texto
+                menus[i].setFont(new Font("Times New Roman", Font.BOLD, 18));
+                // Cambiar el color del texto
+                menus[i].setForeground(coloresTextoMenus[i]);
+                // Agregar el menu al panel
+                menuBar.add(menus[i]);
+            }
 
         //Ligo las opciones del menú, al menú
         menuBar.add(menuLista);
         menuBar.add(menuArbol);
+        add (menuBar);
 
         //Ligo el menú bar al JFrame. Es un método de JFrame
         setJMenuBar(menuBar);   
@@ -51,18 +63,20 @@ public class Interfaz2 extends JFrame {//Heredo la clase JFrame
             panelMostrar.setEditable(false);
             panelMostrar.setText("La lista se encuentra vacía.");
 
+        //Se utiliza lo siguiente para el cambio del color de los botones
         JButton[] botones = {botonInsertar, botonBuscar, botonEliminar};
-        Color[] coloresFondo = {Color.GREEN, Color.BLUE, Color.RED}; // Colores de fondo
-        Color[] coloresTexto = {Color.BLACK, Color.WHITE, Color.WHITE}; // Colores de texto
+        Color[] coloresFondoBotones = {Color.GREEN, Color.BLUE, Color.RED}; // Colores de fondo
+        Color[] coloresTextoBotones = {Color.BLACK, Color.WHITE, Color.WHITE}; // Colores de texto
         
+        //Se utiliza lo siguiente para el cambio de formato del texto de los botones
         for (int i = 0; i < botones.length; i++) {
             // Cambiar el tamaño del botón
-            botones[i].setPreferredSize(new Dimension(100, 50));
+            botones[i].setPreferredSize(new Dimension(50, 25));
             // Cambiar la fuente del texto
             botones[i].setFont(new Font("Times New Roman", Font.BOLD, 18));
             // Cambiar el color de fondo y el color del texto
-            botones[i].setBackground(coloresFondo[i]);
-            botones[i].setForeground(coloresTexto[i]);
+            botones[i].setBackground(coloresFondoBotones[i]);
+            botones[i].setForeground(coloresTextoBotones[i]);
             // Agregar el botón al panel
             panelLista.add(botones[i]);
         }
@@ -152,6 +166,7 @@ public class Interfaz2 extends JFrame {//Heredo la clase JFrame
     }
 
     public static void main(String[] args){
+        
         //Creo mi lista vacía:
         Lista lista = new Lista();
 
