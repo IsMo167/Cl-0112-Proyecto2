@@ -107,6 +107,9 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         JButton botonBuscar = new JButton("Buscar");
         JButton botonEliminar = new JButton("Eliminar");
         JButton botonVaciar = new JButton("Vaciar");
+        
+        Color[] coloresFondoBotones = {Color.GREEN, Color.BLUE, Color.RED,Color.BLUE }; // Colores de fondo
+        Color[] coloresTextoBotones = {Color.BLACK, Color.WHITE, Color.WHITE, Color.WHITE}; // Colores de texto
 
         JButton [] botonesPanelLista = {botonInsertar, botonBuscar, botonEliminar, botonVaciar};
         for (int i = 0; i < botonesPanelLista.length; i++) {
@@ -114,6 +117,8 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             botonesPanelLista[i].setBounds(x_Inicial+anchoBoton*i,y_Boton,anchoBoton,altoBoton);
             // Cambiar la fuente del texto del botón del panel lista
             botonesPanelLista[i].setFont(fuenteGrande);
+            botonesPanelLista[i].setBackground(coloresFondoBotones[i]);
+            botonesPanelLista[i].setForeground(coloresTextoBotones[i]);
             // Agregar el botón al panel
             add(botonesPanelLista[i]);
         }
