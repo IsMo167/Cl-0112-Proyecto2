@@ -1,139 +1,243 @@
-//Referencia: https://javarush.com/es/groups/posts/es.3111.estructuras-de-datos-rbol-binario-en-java
-public class Arbol { //Clase árbol
+/**
+ * Clase: Arbol
+ * Propósito: Crear un árbol binario
+ */
+public class Arbol { 
+    //Atributos
     private NodoArbol nodoRaiz;
 
+    /**
+     * Constructor
+     * Propósito: Inicializar mi árbol
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
     public Arbol() {
         this.nodoRaiz = null; //Se inicializa en null
     }
+    //Setters y getters
+    public NodoArbol getNodoRaiz(){
+        return this.nodoRaiz;
+    }
+    public void setNodoRaiz(NodoArbol nodoRaiz){
+        this.nodoRaiz = nodoRaiz;
+    }
 
-    // Insertar un nuevo nodo en el árbol
+    /**
+     * Método: esVacio
+     * Propósito: Verificar si mi árbol está vacío o no
+     * Parámetros de entrada:
+     *      - null
+     *      -
+     * Parámetros de salida:
+     *      - boolean: Representa si el árbol está vacío o no
+     */
+    public boolean esVacio(){
+        boolean estaVacio = (this.nodoRaiz == null)? true : false;
+        return estaVacio;
+    }
+    
+    /**
+     * Método: vaciar
+     * Propósito: Vaciar mi árbol
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
+    public void vaciar(){
+        this.nodoRaiz = null;
+    }
+
+    /**
+     * Método: buscar
+     * Propósito: Buscar si un valor se encuentra en el árbol
+     * Parámetros de entrada:
+     *      - int valor: Valor a buscar
+     * Parámetros de salida:
+     *      - boolean: Representa si se encontró el valor o no
+     */
+    public boolean buscar(int valor) {
+        boolean seEncontro = false;
+        if(this.nodoRaiz != null){
+            seEncontro = buscarRec(this.nodoRaiz, valor);
+        }
+        return seEncontro;
+    }
+
+    /**
+     * Método: buscarRec
+     * Propósito: Buscar recursivamente en cada elemento del árbol
+     * Parámetros de entrada:
+     *      - NodoArbol nodo: Nodo el cuál debo analizar
+     *      - int valor: Valor a ser buscado
+     * Parámetros de salida:
+     *      - boolean: Representa si se encontró el valor o no
+     */
+    private boolean buscarRec(NodoArbol nodo, int valor) {
+        boolean seEncontro = false;
+        if (nodo == null){
+            return seEncontro;
+        }else if(nodo.getValor() == valor){
+            seEncontro = true;
+        }
+        seEncontro = seEncontro || buscarRec(nodo.getHijoIzquierdo(), valor);
+        seEncontro = seEncontro || buscarRec(nodo.getHijoDerecho(), valor);
+        
+        return seEncontro;
+    }
+
+    /**
+     * Método: insertar
+     * Propósito: Insertar un valor en el árbol
+     * Parámetros de entrada:
+     *      - int valor: Valor a ser insertado
+     * Parámetros de salida:
+     *      - null
+     */
     public void insertar(int valor) {
-        NodoArbol nuevoNodo = new NodoArbol(valor);
         if (nodoRaiz == null) {
-            this.nodoRaiz = nuevoNodo;
+            this.nodoRaiz = new NodoArbol(valor);
         } else {
-            insertarRecursivamente(nodoRaiz, nuevoNodo);
+            insertarRecursivamente(nodoRaiz, valor);
         }
     }
 
-    private void insertarRecursivamente(NodoArbol nodoActual, NodoArbol nuevoNodo) {
-        if (nuevoNodo.getValor() < nodoActual.getValor()) {
-            if (nodoActual.getHijoIzquierdo() == null) {
-                nodoActual.setHijoIzquierdo(nuevoNodo);
+    /**
+     * Método: insertarRecursivamente
+     * Propósito: Identificar en qué posición debo insertar un valor 
+     * Parámetros de entrada:
+     *      - NodoArbol nodo: Nodo el cuál debo analizar 
+     *      - int valor: Valor a ser insertado
+     * Parámetros de salida:
+     *      - null
+     */
+    private void insertarRecursivamente(NodoArbol nodo, int valor) {
+        if (valor < nodo.getValor()) {
+            if (nodo.getHijoIzquierdo() == null) {
+                nodo.setHijoIzquierdo(new NodoArbol(valor));
             } else {
-                insertarRecursivamente(nodoActual.getHijoIzquierdo(), nuevoNodo);
+                insertarRecursivamente(nodo.getHijoIzquierdo(), valor);
             }
-        } else if (nuevoNodo.getValor() > nodoActual.getValor()) {
-            if (nodoActual.getHijoDerecho() == null) {
-                nodoActual.setHijoDerecho(nuevoNodo);
+        } else if (nodo.getValor() < valor) {
+            if (nodo.getHijoDerecho() == null) {
+                nodo.setHijoDerecho(new NodoArbol(valor));
             } else {
-                insertarRecursivamente(nodoActual.getHijoDerecho(), nuevoNodo);
-            }
-        }
-    }
-
-    // Buscar un nodo por su valor
-    public NodoArbol encontrarNodoPorValor(int valor) {
-        return encontrarNodoPorValorRecursivamente(nodoRaiz, valor);
-    }
-
-    private NodoArbol encontrarNodoPorValorRecursivamente(NodoArbol nodoActual, int valor) {
-        if (nodoActual == null || nodoActual.getValor() == valor) {
-            return nodoActual;
-        }
-        if (valor < nodoActual.getValor()) {
-            return encontrarNodoPorValorRecursivamente(nodoActual.getHijoIzquierdo(), valor);
-        } else {
-            return encontrarNodoPorValorRecursivamente(nodoActual.getHijoDerecho(), valor);
-        }
-    }
-    // Eliminar un nodo por su valor
-    public void eliminar(int valor) {
-        this.nodoRaiz = eliminarNodoRecursivamente(nodoRaiz, valor);
-    }
-
-    private NodoArbol eliminarNodoRecursivamente(NodoArbol nodoActual, int valor) {
-        if (nodoActual == null) {
-            return null;
-        }
-        if (valor < nodoActual.getValor()) {
-            nodoActual.setHijoIzquierdo(eliminarNodoRecursivamente(nodoActual.getHijoIzquierdo(), valor));
-        } else if (valor > nodoActual.getValor()) {
-            nodoActual.setHijoDerecho(eliminarNodoRecursivamente(nodoActual.getHijoDerecho(), valor));
-        } else {
-            // Nodo encontrado
-            if (nodoActual.getHijoIzquierdo() == null) {
-                return nodoActual.getHijoDerecho();
-            } else if (nodoActual.getHijoDerecho() == null) {
-                return nodoActual.getHijoIzquierdo();
-            } else {
-                NodoArbol minimoNodoDerecho = encontrarMinimo(nodoActual.getHijoDerecho());
-                nodoActual.setValor(minimoNodoDerecho.getValor());
-                nodoActual.setHijoDerecho(eliminarNodoRecursivamente(nodoActual.getHijoDerecho(), minimoNodoDerecho.getValor()));
+                insertarRecursivamente(nodo.getHijoDerecho(), valor);
             }
         }
-        return nodoActual;
     }
 
-    private NodoArbol encontrarMinimo(NodoArbol nodo) {
-        while (nodo.getHijoIzquierdo() != null) {
-            nodo = nodo.getHijoIzquierdo();
+    /**
+     * Método: eliminar
+     * Propósito: Eliminar un valor de un árbol
+     * Parámetros de entrada:
+     *      - int valor: Valor a ser eliminado
+     * Parámetros de salida:
+     *      - null
+     */
+    public void eliminar(int valor){
+        this.nodoRaiz = eliminarRec(this.nodoRaiz, valor);
+    }
+    
+
+    /**
+     * Método: eliminarRec
+     * Propósito: identificar cómo eliminar el nodo una vez encontrado
+     * Parámetros de entrada:
+     *      - NodoArbol nodo: Nodo que debo analizar
+     *      - int valor: Valor que quiero eliminar
+     * Parámetros de salida:
+     *      - NodoArbol: Para mantener la estructura del árbol bien
+     */
+    public NodoArbol eliminarRec(NodoArbol nodo, int valor){
+        if (nodo != null){
+            //Caso Base: Encontró el valor a ser eliminado
+            if(valor == nodo.getValor()){   
+                //Eliminamos una hoja:
+                if(nodo.getHijoIzquierdo() == null && nodo.getHijoDerecho() == null){ 
+                    return null;
+                }
+                //Eliminamos un nodo con un único hijo
+                else if(nodo.getHijoIzquierdo() == null ^ nodo.getHijoDerecho() == null){   
+                    if(nodo.getHijoIzquierdo() == null){//Solo tiene hijo derecho
+                        return nodo.getHijoDerecho();
+                    }else{  //Solo tiene hijo izquierdo
+                        return nodo.getHijoIzquierdo();
+                    }
+                } else{ //Eliminamos un nodo con dos hijos
+                    NodoArbol sucesor = encontrarMinimo(nodo.getHijoDerecho());
+                    nodo.setValor(sucesor.getValor());
+                    nodo.setHijoDerecho(eliminarRec(nodo.getHijoDerecho(), sucesor.getValor()));
+                    return nodo;
+                }
+            }
+            if(valor < nodo.getValor()){
+                nodo.setHijoIzquierdo(eliminarRec(nodo.getHijoIzquierdo(), valor));
+            } else{
+                nodo.setHijoDerecho(eliminarRec(nodo.getHijoDerecho(), valor));
+            }
         }
         return nodo;
     }
-
-    // Imprimir el árbol de manera visual
-    public void imprimirArbol() {
-        if (nodoRaiz == null) {
-            System.out.println("El árbol está vacío.");
-            return;
+    
+    /**
+     * Método: encontrarMinimo
+     * Propósito: Encontrar el mínimo valor de un subArbol
+     * Parámetros de entrada:
+     *      - NodoArbol nodo: Cabeza del subArbol que estoy analizando
+     * Parámetros de salida:
+     *      - NodoArbol: Nodo mínimo del subArbol
+     */
+    public NodoArbol encontrarMinimo (NodoArbol nodo){
+        while(nodo.getHijoIzquierdo() != null){ //Caso Rec
+            return encontrarMinimo(nodo.getHijoIzquierdo());
         }
+        return nodo;
+    } 
 
-        // Usamos la pila personalizada
-        Pila pilaGlobal = new Pila();
-        pilaGlobal.apilar(nodoRaiz);
-        int espacios = 32;
-        boolean filaVacia = false;
-        String separador = "-----------------------------------------------------------------";
-        System.out.println(separador);
+    /**
+     * Método: mostrar
+     * Propósito: Guardar en un String el contenido de un árbol
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - String: Contenido del árbol
+     */
+    public String mostrar(){
 
-        while (!filaVacia) {
-            Pila pilaLocal = new Pila();
-            filaVacia = true;
-
-            for (int j = 0; j < espacios; j++) {
-                System.out.print(' ');
-            }
-
-            while (!pilaGlobal.estaVacia()) {
-                NodoArbol nodoTemp = pilaGlobal.desapilar();
-                if (nodoTemp != null) {
-                    System.out.print(nodoTemp.getValor());
-                    pilaLocal.apilar(nodoTemp.getHijoIzquierdo());
-                    pilaLocal.apilar(nodoTemp.getHijoDerecho());
-                    if (nodoTemp.getHijoIzquierdo() != null || nodoTemp.getHijoDerecho() != null) {
-                        filaVacia = false;
-                    }
-                } else {
-                    System.out.print("null");
-                    pilaLocal.apilar(null);
-                    pilaLocal.apilar(null);
-                }
-
-                for (int j = 0; j < espacios * 2 - 2; j++) {
-                    System.out.print(' ');
-                }
-            }
-
-            System.out.println();
-            espacios /= 2;
-
-            while (!pilaLocal.estaVacia()) {
-                pilaGlobal.apilar(pilaLocal.desapilar());
-            }
+        String arbolTexto = "";
+        if(this.nodoRaiz == null){
+            arbolTexto += "El árbol se encuentra vacío";
+        }else{
+            arbolTexto += mostrarRec(this.nodoRaiz);
+            arbolTexto += "}";
         }
-        System.out.println(separador);
+        return arbolTexto;
+    }
+
+    /**
+     * Método: mostrarRec
+     * Propósito: Recorrer recursivamente el árbol en preorden e ir regresando los valores en formato de texto
+     * Parámetros de entrada:
+     *      - NodoArbol nodo: Nodo que debo analizar
+     * Parámetros de salida:
+     *      - String: Contenido del nodo
+     */
+    public String mostrarRec(NodoArbol nodo){
+        String resultado = "";
+        if(nodo != null){   //Solo se hace el recorrido si el nodo no es nulo  
+            if(nodo == this.nodoRaiz){
+                resultado += "{" + nodo.getValor();
+            }
+            else{
+                resultado += ", " + nodo.getValor();
+            }
+            resultado += mostrarRec(nodo.getHijoIzquierdo());
+            resultado += mostrarRec(nodo.getHijoDerecho());
+        }
+        return resultado;
     }
 }
-
- 

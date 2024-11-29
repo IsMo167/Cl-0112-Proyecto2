@@ -2,12 +2,25 @@ import javax.swing.*;
 import java.awt.*;
 //https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html
 
-
+/**
+ * Clase: Interfaz
+ * Propósito: Crear una interfaz que me permita trabajar con listas y árboles
+ */
 public class Interfaz extends JFrame {//Heredo la clase JFrame
-    private boolean listaActiva = false;
-    private boolean estructuraSeleccionada = false; //Para evaluar si ya seleccionó una estructura desde el menú
-    //Método constructor
-    public Interfaz(Lista lista, ArbolFinal arbol){
+    //Atributos que necesitaré posteriormente
+    private boolean listaActiva = false;    //Para saber si estoy trabajando con la lista o no
+    private boolean estructuraSeleccionada = false; //Para evaluar si ya seleccionó una estructura desde el menú por primera vez
+
+    /**
+     * Método constructor
+     * Propósito: Crear mi JFrame con las características deseadas
+     * Parámetros de entrada:
+     *      - Lista lista: Lista simplemente enlazada con la que trabajaré
+     *      - Arbol arbol: Arbol binario con el que trabajaré
+     * Parámetros de salida:
+     *      - null
+     */
+    public Interfaz(Lista lista, Arbol arbol){
         /**
          * -------------------------------------------------------------------------------------------------------------------------
          * Configuraciones Generales: Colores, tamaños, datos del JFrame, etc.
@@ -42,7 +55,7 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         setExtendedState(MAXIMIZED_BOTH);                   //Le doy las dimensiones de mi pantalla
         setDefaultCloseOperation(EXIT_ON_CLOSE);            //Comportamiento de salida
         setResizable(true);                       //Permito la posibilidad de minimizar mi ventana
-        setLayout(null);                      //Layout
+        setLayout(null);                            //Layout
 
         
         /**
@@ -164,7 +177,14 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
          * Funcionalidad de todos los botones:
          * -------------------------------------------------------------------------------------------------------------------------
          */
-        //Botones del JMenu
+
+        /**
+         * Botón: El botón de lista en el menú
+         * Propósito: Seleccionar la lista para trabajar con ella
+         * Funcionamiento:
+         *      - Me indica que estoy trabajando con la lista
+         *      - Me muestra el estado actual de la lista
+         */
         listaItem.addActionListener(e -> {
             labelEstructura.setText("Estado actual de la lista:");
             contenidoEstructura.setText(lista.mostrar());
@@ -172,6 +192,13 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             this.estructuraSeleccionada = true;
             fieldIngresarDatos.setText(null);   //Reseteo el textField
         });
+        /**
+         * Botón: El botón de árbol en el menú
+         * Propósito: Seleccionar el árbol para trabajar con él
+         * Funcionamiento:
+         *      -Me indica que estoy trabajando con el árbol
+         *      -Me muestra el estado actual del árbol
+         */
         arbolItem.addActionListener(e -> {
             labelEstructura.setText("Estado actual del árbol:");
             contenidoEstructura.setText(arbol.mostrar());
@@ -180,9 +207,16 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             fieldIngresarDatos.setText(null);   //Reseteo el textField
         });
 
-        // Botones de Insertar, Buscar y Eliminar
-
-        //Para el botón de Insertar:
+        /**
+         * Botón: El botón de Insertar
+         * Propósito: Insertar un dato en una estructura de datos
+         * Funcionamiento:
+         *      - Verifica si tengo alguna estructura seleccionada
+         *      - Verifica si es posible hacer la conversión String -> int
+         *      - Verifica con qué estructura de datos estoy trabajando
+         *      - Inserta el valor si no se encuentra en mi estructura
+         *      - Muestra el estado actual de la estructura
+         */
         botonInsertar.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
                 if(conversionValida(fieldIngresarDatos)){
@@ -214,25 +248,42 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             fieldIngresarDatos.setText(null);
         });
 
-        //Para el botón de Buscar:
+        /**
+         * Botón: El botón de Buscar
+         * Propósito: Buscar un dato en una estructura de datos
+         * Funcionamiento:
+         *      - Verifica si tengo alguna estructura seleccionada
+         *      - Verifica si es posible hacer la conversión String -> int
+         *      - Verifica con qué estructura de datos estoy trabajando
+         *      - Verifica si la estructura está vacía o no
+         *      - Me muestra si el valor se encuentra o no en mi estructura
+         */
         botonBuscar.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
                 if(conversionValida(fieldIngresarDatos)){
                     int num = Integer.parseInt(fieldIngresarDatos.getText());
                     boolean seEncuentra;
                     if(this.listaActiva){   //Trabajamos la lista
-                        seEncuentra = lista.seEncuentra(num);
-                        if(seEncuentra){
-                            JOptionPane.showMessageDialog(null, "El valor '" + num + "' SÍ se encuentra en la lista.");
+                        if(lista.esVacio()){
+                            JOptionPane.showMessageDialog(null, "La lista se encuentra vacía, no hay nada que buscar.");
                         }else{
-                            JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en la lista.");
+                            seEncuentra = lista.seEncuentra(num);
+                            if(seEncuentra){
+                                JOptionPane.showMessageDialog(null, "El valor '" + num + "' SÍ se encuentra en la lista.");
+                            }else{
+                                JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en la lista.");
+                            }
                         }
                     }else{  //Trabajamos el árbol
-                        seEncuentra = arbol.buscar(num);
-                        if(seEncuentra){
-                            JOptionPane.showMessageDialog(null, "El valor '" + num + "' SÍ se encuentra en el árbol.");
+                        if(arbol.esVacio()){
+                            JOptionPane.showMessageDialog(null, "El árbol se encuentra vacío, no hay nada que buscar.");
                         }else{
-                            JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en el árbol.");
+                            seEncuentra = arbol.buscar(num);
+                            if(seEncuentra){
+                                JOptionPane.showMessageDialog(null, "El valor '" + num + "' SÍ se encuentra en la lista.");
+                            }else{
+                                JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en la lista.");
+                            }
                         }
                     }
                 }
@@ -242,31 +293,49 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             fieldIngresarDatos.setText(null);
         });
 
-        //Para el botón de Eliminar:
+        /**
+         * Botón: El botón de Eliminar
+         * Propósito: Eliminar un dato en una estructura de datos
+         * Funcionamiento:
+         *      - Verifica si tengo alguna estructura seleccionada
+         *      - Verifica si es posible hacer la conversión String -> int
+         *      - Verifica con qué estructura de datos estoy trabajando
+         *      - Verifica si la estructura se encuentra vacía
+         *      - Verifica si el valor se encuentra en mi estructura
+         *      - Elimina el valor si se encuentra en mi estructura
+         *      - Muestra el estado actual de la estructura
+         */
         botonEliminar.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
                 if(conversionValida(fieldIngresarDatos)){
                     int num = Integer.parseInt(fieldIngresarDatos.getText());
                     boolean seEncuentra;
                     if(this.listaActiva){   //Trabajamos la lista
-                        seEncuentra = lista.seEncuentra(num);
-                        if(seEncuentra){
-                            lista.eliminar(num);
-                            contenidoEstructura.setText(lista.mostrar());
-
+                        if(lista.esVacio()){
+                            JOptionPane.showMessageDialog(null, "La lista se encuentra vacía, no hay nada que eliminar.");
                         }else{
-                            JOptionPane.showMessageDialog(null, "El valor '" + num + 
-                            "' NO se encuentra en la lista, por lo que no puede ser eliminado.");
+                            seEncuentra = lista.seEncuentra(num);
+                            if(seEncuentra){
+                                lista.eliminar(num);
+                                contenidoEstructura.setText(lista.mostrar());
+
+                            }else{
+                                JOptionPane.showMessageDialog(null, "El valor '" + num + 
+                                "' NO se encuentra en la lista, por lo que no puede ser eliminado.");
+                            }
                         }
                     }else{  //Trabajamos el árbol
-                        seEncuentra = arbol.buscar(num);
-                        if(seEncuentra){
-                            arbol.eliminar(num);
-                            contenidoEstructura.setText(arbol.mostrar());
-
+                        if(arbol.esVacio()){
+                            JOptionPane.showMessageDialog(null, "El árbol se encuentra vacío, no hay nada que eliminar.");
                         }else{
-                            JOptionPane.showMessageDialog(null, "El valor '" + num + 
-                            "' NO se encuentra en el árbol, por lo que no puede ser eliminado.");
+                            seEncuentra = arbol.buscar(num);
+                            if(seEncuentra){
+                                arbol.eliminar(num);
+                                contenidoEstructura.setText(arbol.mostrar());
+                            }else{
+                                JOptionPane.showMessageDialog(null, "El valor '" + num + 
+                                "' NO se encuentra en el árbol, por lo que no puede ser eliminado.");
+                            }
                         }
                     }
                 }
@@ -276,11 +345,21 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             fieldIngresarDatos.setText(null);
         });
 
-        //Para el botón de Vaciar:
+        /**
+         * Botón: El botón de Vaciar
+         * Propósito: Vaciar una estructura de datos
+         * Funcionamiento:
+         *      - Verifica si tengo alguna estructura seleccionada
+         *      - Verifica con qué estructura de datos estoy trabajando
+         *      - Verifica si la estructura se encuentra vacía
+         *      - Me pide comprobación de vacío de estructura
+         *      - Vacía mi estructura
+         *      - Muestra el estado actual de la estructura
+         */
         botonVaciar.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
                 if(this.listaActiva){
-                    if(lista.vacia()){
+                    if(lista.esVacio()){
                         JOptionPane.showMessageDialog(null, "La Lista ya se encuentra vacía.");
                     }else{
                         int respuesta = JOptionPane.showConfirmDialog(
@@ -316,7 +395,7 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         ordenarListaItem.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
                 if(this.listaActiva){
-                    if(lista.vacia()){
+                    if(lista.esVacio()){
                         JOptionPane.showMessageDialog(null, "La Lista se encuentra vacía.");
                     }else{
                         // lista.ordenar();
@@ -331,12 +410,19 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
 
 
     }
-
+    /**
+     * Método: main
+     * Propósito: Inicializar mi lista, árbol, ventana y hacerla visible para poder utilizarla
+     * Parámetros de entrada:
+     *      - String[] args
+     * Parámetros de salida:
+     *      - null
+     */
     public static void main(String[] args){
         //Creo mi lista
         Lista lista = new Lista();
         //Creo mi árbol
-        ArbolFinal arbol = new ArbolFinal();
+        Arbol arbol = new Arbol();
 
         //Creo el objeto ventana
         Interfaz ventana = new Interfaz(lista, arbol);
@@ -344,6 +430,14 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         //Hago mi ventana visible
         ventana.setVisible(true);
     }
+    /**
+     * Método: conversionValida
+     * Propósito: Determinar si una conversión de texto a int es válida o no
+     * Parámetros de entrada:
+     *      - JTextField fieldIngresarDatos: Campo de texto de donde extraeré el texto a convertir 
+     * Parámetros de salida:
+     *      - boolean: Representa si la conversión fue válida o no
+     */
     public static boolean conversionValida(JTextField fieldIngresarDatos){
         boolean conversionValida = false;
         try{

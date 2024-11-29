@@ -1,14 +1,19 @@
 /**
- * Referencias:
- * https://www.deltapci.com/java-listas-enlazadas-simples/
- * https://www.youtube.com/watch?v=9q758AJ1nck&t=1s
- * https://www.youtube.com/watch?v=WmVMRweAp7E
+ * Clase: Lista
+ * Propósito: Crear una lista simplemente enlazada
  */
 public class Lista{
     //Atributos:
     private NodoLista cabeza;
 
-    //Método Constructor:
+    /**
+     * Constructor
+     * Propósito: Inicializar mi lista.
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
     public Lista(){
         cabeza = null;
     }
@@ -17,25 +22,47 @@ public class Lista{
     public NodoLista getCabeza(){
         return this.cabeza;
     }
+    
     public void setCabeza(NodoLista cabeza){
         this.cabeza = cabeza;
     }
 
-    //Método para comprobar si la lista está vacía o no:
-    public boolean vacia(){
+    /**
+     * Método: esVacio
+     * Propósito: Comprobar si la lista está vacía
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - boolean : true si está vacía o false si no lo está
+     */
+    public boolean esVacio(){
         boolean listaVacia = (this.cabeza == null)? true : false;
         return listaVacia;
     }
 
-    //Método de vaciar
+    /**
+     * Método: vaciar
+     * Propósito: vaciar la lista 
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
     public void vaciar(){
         this.cabeza = null;
     }
     
-    //Método de Buscar:
+    /**
+     * Método: seEncuentra
+     * Propósito: Verificar si un valor se encuentra o no en la lista
+     * Parámetros de entrada:
+     *      - int valor : Valor a buscar
+     * Parámetros de salida:
+     *      - boolean: Representa si se encontró el valor o no
+     */
     public boolean seEncuentra(int valor){
         boolean seEncuentra = false;
-        if(this.cabeza != null){    //1. Si la cabeza no está vacía
+        if(this.cabeza != null){    //Si la lista no está vacía
             NodoLista NodoListaActual = this.cabeza;
             while(NodoListaActual != null){
                 if (NodoListaActual.getValor() == valor){
@@ -45,10 +72,17 @@ public class Lista{
                 NodoListaActual = NodoListaActual.getSiguiente();
             }
         }
-        return seEncuentra;     //2. Else: return false
+        return seEncuentra;    
     }
 
-    //Método de Insertar:
+    /**
+     * Método: insertar
+     * Propósito: Insertar un valor en la lista
+     * Parámetros de entrada:
+     *      - int valor: Valor a insertar
+     * Parámetros de salida:
+     *      - null
+     */
     public void insertar(int valor){     
         if (this.cabeza == null){   //Si la lista está vacía:
             this.cabeza = new NodoLista(valor);
@@ -60,14 +94,21 @@ public class Lista{
         }
     }
 
-    //Método de Eliminar:
+    /**
+     * Método: eliminar
+     * Propósito: Eliminar de la lista el valor ingresado
+     * Parámetros de entrada:
+     *      - int valor: Valor a eliminar
+     * Parámetros de salida:
+     *      - null
+     */
     public void eliminar(int valor){ 
-        if(!vacia()){   //Si la lista no está vacía
+        if(!esVacio()){   //Si la lista no está vacía
             if(seEncuentra(valor)){ //Si el valor se encuentra en la lista
-                //Si el objeto es la cabeza:                //Queremos eliminar el 3 de: 1->2->3->4
+                //Si el objeto es la cabeza:                
                 if(this.cabeza.getValor() == valor){
                     this.cabeza = this.cabeza.getSiguiente();
-                } else{
+                } else{ //Si el objeto no es la cabeza
                     NodoLista temporal = this.cabeza;
                     while(temporal.getSiguiente().getValor() != valor){
                         temporal = temporal.getSiguiente();
@@ -79,10 +120,17 @@ public class Lista{
         }
     }
 
-    //Método para mostrar la lista:
+    /**
+     * Método: mostrar
+     * Propósito: Obtener todos los elementos de la lista en formato de string para su posterior visualización
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - String: Todos los elementos de la lista
+     */
     public String mostrar(){
         String textoLista = "";
-        if(vacia()){    //Lista vacía
+        if(esVacio()){    //Lista vacía
             textoLista += "La lista se encuentra vacía.";
         } else if (this.cabeza.getSiguiente() == null){ //Lista con solo la cabeza
             textoLista += this.cabeza.getValor();
@@ -101,43 +149,4 @@ public class Lista{
         return(textoLista);
     }
     
-    // //Para ordenar la lista
-    // public void ordenar(){
-    //     if(this.cabeza == null || this.cabeza.getSiguiente() == null){
-    //         //La lista ya está ordenada
-    //     }else{
-    //         NodoLista nodoFijo = this.cabeza;
-    //         while(nodoFijo.getSiguiente() != null){
-    //             NodoLista nodoComparacion = nodoFijo.getSiguiente();
-    //             if(nodoComparacion.getValor() < nodoFijo.getValor()){
-    //                 int valorTemporal = nodoFijo.getValor();
-    //                 nodoFijo.setValor(nodoComparacion.getValor());
-    //                 nodoComparacion.setValor(valorTemporal);
-    //             }
-    //             nodoFijo = nodoFijo.getSiguiente();
-    //         }
-    //     }
-    // }
-
-    public static void main(String[] args) {
-        /**
-         * Crear lista e ingresar raíz
-         */
-        Lista lista1 = new Lista();
-        System.out.println("Prueba insertar Cabeza: ");
-        lista1.insertar(7);
-        System.out.println(lista1.mostrar());
-        //  Lista: 7
-
-        /**
-         * Agregar otros nodos
-         */
-        System.out.println("Prueba insertar varios nodos: ");
-        lista1.insertar(1);
-        lista1.insertar(3);
-        lista1.insertar(5);
-        System.out.println(lista1.mostrar());
-        //  Lista: 1 -> 3 -> 5 -> 7
-    }
-
 }
