@@ -13,7 +13,7 @@ public class MainArbol {
         for (int i = 0; i < cantidadNodos; i++ ){
             System.out.println("Ingrese el valor del nodo " + (i+1) + ": ");
             int valorNodo = scanner.nextInt();
-            arbol.insertarNodo(valorNodo);
+            arbol.insertar(valorNodo);
         }
 
 
@@ -35,7 +35,7 @@ public class MainArbol {
                 System.out.println("Ingrese el valor a eliminar # " + (i+1));
                 int valorNodoEliminar = scanner.nextInt();
                 if(arbol.encontrarNodoPorValor (valorNodoEliminar) != null){
-                    arbol.eliminarNodo(valorNodoEliminar);
+                    arbol.eliminar(valorNodoEliminar);
                     System.out.println("Se elimina el nodo: " + valorNodoEliminar);
                 }
                 else{

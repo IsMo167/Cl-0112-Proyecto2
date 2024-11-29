@@ -7,7 +7,7 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
     private boolean listaActiva = false;
     private boolean estructuraSeleccionada = false; //Para evaluar si ya seleccionó una estructura desde el menú
     //Método constructor
-    public Interfaz(Lista lista){
+    public Interfaz(Lista lista, ArbolFinal arbol){
         /**
          * -------------------------------------------------------------------------------------------------------------------------
          * Configuraciones Generales: Colores, tamaños, datos del JFrame, etc.
@@ -83,15 +83,15 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             //Cambio el estilo del texto
             menuFuncionesAdicionales.setFont(fuenteItemsMenu);
             //Opciones disponibles del menú:
-            JMenuItem ordenarItem = new JMenuItem("Ordenar Lista");   //Opción para ordenar la lista
+            JMenuItem ordenarListaItem = new JMenuItem("Ordenar Lista");   //Opción para ordenar la lista
             // Cambiar el tamaño del botón
-            ordenarItem.setPreferredSize(new Dimension(120,25));
+            ordenarListaItem.setPreferredSize(new Dimension(120,25));
             // Cambiar la fuente del texto del botón
-            ordenarItem.setFont(fuenteItemsMenu);
+            ordenarListaItem.setFont(fuenteItemsMenu);
             // Cambiar el color del texto del botón
-            ordenarItem.setForeground(coloritemsMenu);
+            ordenarListaItem.setForeground(coloritemsMenu);
             // Agregar el botón al menu
-            menuFuncionesAdicionales.add(ordenarItem);
+            menuFuncionesAdicionales.add(ordenarListaItem);
 
         menuBar.add(menuFuncionesAdicionales);
 
@@ -168,8 +168,8 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             fieldIngresarDatos.setText(null);   //Reseteo el textField
         });
         arbolItem.addActionListener(e -> {
-            labelEstructura.setText("Estamos actual del árbol:");
-            contenidoEstructura.setText("Árbol vacío");
+            labelEstructura.setText("Estado actual del árbol:");
+            contenidoEstructura.setText(arbol.mostrar());
             this.listaActiva = false;
             this.estructuraSeleccionada = true;
             fieldIngresarDatos.setText(null);   //Reseteo el textField
@@ -193,7 +193,14 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                             contenidoEstructura.setText(lista.mostrar());
                         }
                     }else{  //Trabajamos el árbol
-                        contenidoEstructura.setText("Le agregamos al árbol");
+                        seEncuentra = arbol.buscar(num);
+                        if(seEncuentra){
+                            JOptionPane.showMessageDialog(null, "El valor '" + num + 
+                            "' ya se encuentra en el árbol, por lo que no fue agregado.");
+                        }else{
+                            arbol.insertar(num);
+                            contenidoEstructura.setText(arbol.mostrar());
+                        }
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -216,7 +223,12 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                             JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en la lista.");
                         }
                     }else{  //Trabajamos el árbol
-                        contenidoEstructura.setText("El valor '" + num + "' NO se encuentra en el árbol.");
+                        seEncuentra = arbol.buscar(num);
+                        if(seEncuentra){
+                            JOptionPane.showMessageDialog(null, "El valor '" + num + "' SÍ se encuentra en el árbol.");
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en el árbol.");
+                        }
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -242,7 +254,15 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                             "' NO se encuentra en la lista, por lo que no puede ser eliminado.");
                         }
                     }else{  //Trabajamos el árbol
-                        contenidoEstructura.setText("El valor '" + num + "' no puede ser eliminado del árbol.");
+                        seEncuentra = arbol.buscar(num);
+                        if(seEncuentra){
+                            arbol.eliminar(num);
+                            contenidoEstructura.setText(arbol.mostrar());
+
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El valor '" + num + 
+                            "' NO se encuentra en el árbol, por lo que no puede ser eliminado.");
+                        }
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -254,8 +274,6 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         //Para el botón de Vaciar:
         botonVaciar.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
-                
-
                 if(this.listaActiva){
                     if(lista.vacia()){
                         JOptionPane.showMessageDialog(null, "La Lista ya se encuentra vacía.");
@@ -270,7 +288,18 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                         }
                     }
                 }else{  //Trabajamos con el árbol
-                    contenidoEstructura.setText("Árbol vaciado.");
+                    if(arbol.esVacio()){
+                        JOptionPane.showMessageDialog(null, "El árbol ya se encuentra vacío.");
+                    }else{
+                        int respuesta = JOptionPane.showConfirmDialog(
+                            null, "¿Estás seguro de vaciar la estructura?", "Confirmación de vaciado", 
+                            JOptionPane.YES_NO_OPTION);
+                        // Procesar la respuesta
+                        if (respuesta == JOptionPane.YES_OPTION) {
+                            arbol.vaciar();
+                            contenidoEstructura.setText(arbol.mostrar());
+                        }
+                    }
                 }
             }else{  //No seleccionamos una estructura
                 JOptionPane.showMessageDialog(null, "Seleccione una estructura antes de realizar cualquier acción.");
@@ -279,7 +308,7 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         });
 
         //Para el botón de Ordenar (la lista):
-        ordenarItem.addActionListener(e -> {
+        ordenarListaItem.addActionListener(e -> {
             if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
                 if(this.listaActiva){
                     if(lista.vacia()){
@@ -301,9 +330,11 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
     public static void main(String[] args){
         //Creo mi lista
         Lista lista = new Lista();
+        //Creo mi árbol
+        ArbolFinal arbol = new ArbolFinal();
 
         //Creo el objeto ventana
-        Interfaz ventana = new Interfaz(lista);
+        Interfaz ventana = new Interfaz(lista, arbol);
         
         //Hago mi ventana visible
         ventana.setVisible(true);

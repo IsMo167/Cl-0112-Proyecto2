@@ -3,14 +3,14 @@ public class Arbol { //Clase árbol
     private NodoArbol nodoRaiz;
 
     public Arbol() {
-        nodoRaiz = null; //Se inicializa en null
+        this.nodoRaiz = null; //Se inicializa en null
     }
 
     // Insertar un nuevo nodo en el árbol
-    public void insertarNodo(int valor) {
+    public void insertar(int valor) {
         NodoArbol nuevoNodo = new NodoArbol(valor);
         if (nodoRaiz == null) {
-            nodoRaiz = nuevoNodo;
+            this.nodoRaiz = nuevoNodo;
         } else {
             insertarRecursivamente(nodoRaiz, nuevoNodo);
         }
@@ -47,18 +47,15 @@ public class Arbol { //Clase árbol
             return encontrarNodoPorValorRecursivamente(nodoActual.getHijoDerecho(), valor);
         }
     }
-
     // Eliminar un nodo por su valor
-    public boolean eliminarNodo(int valor) {
-        nodoRaiz = eliminarNodoRecursivamente(nodoRaiz, valor);
-        return nodoRaiz != null;
+    public void eliminar(int valor) {
+        this.nodoRaiz = eliminarNodoRecursivamente(nodoRaiz, valor);
     }
 
     private NodoArbol eliminarNodoRecursivamente(NodoArbol nodoActual, int valor) {
         if (nodoActual == null) {
             return null;
         }
-
         if (valor < nodoActual.getValor()) {
             nodoActual.setHijoIzquierdo(eliminarNodoRecursivamente(nodoActual.getHijoIzquierdo(), valor));
         } else if (valor > nodoActual.getValor()) {

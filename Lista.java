@@ -119,4 +119,25 @@ public class Lista{
     //     }
     // }
 
+    public static void main(String[] args) {
+        /**
+         * Crear lista e ingresar raíz
+         */
+        Lista lista1 = new Lista();
+        System.out.println("Prueba insertar Cabeza: ");
+        lista1.insertar(7);
+        System.out.println(lista1.mostrar());
+        //  Lista: 7
+
+        /**
+         * Agregar otros nodos
+         */
+        System.out.println("Prueba insertar varios nodos: ");
+        lista1.insertar(1);
+        lista1.insertar(3);
+        lista1.insertar(5);
+        System.out.println(lista1.mostrar());
+        //  Lista: 1 -> 3 -> 5 -> 7
+    }
+
 }
