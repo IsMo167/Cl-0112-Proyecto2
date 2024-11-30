@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-//https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/package-summary.html
 
 /**
  * Clase: Interfaz
@@ -52,7 +51,7 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
 
         //Configuración del JFrame
         setTitle("Proyecto #2");                      //Título
-        setExtendedState(MAXIMIZED_BOTH);                   //Le doy las dimensiones de mi pantalla
+        setBounds(0, 0, anchoMonitor, 5*altoMonitor/12);
         setDefaultCloseOperation(EXIT_ON_CLOSE);            //Comportamiento de salida
         setResizable(true);                       //Permito la posibilidad de minimizar mi ventana
         setLayout(null);                            //Layout
@@ -65,7 +64,13 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
          */
         
         //El espacio en el que agregaré mi menú
-        JMenuBar menuBar = new JMenuBar();            
+        JMenuBar menuBar = new JMenuBar();       
+        
+        /**
+         * -------------------------------------------------------------------------------------------------------------------------
+         * Mi primera sección del menú (Opciones para seleccionar estructuras de datos)
+         * -------------------------------------------------------------------------------------------------------------------------
+         */
 
         //Creo mi barra de menú. Esta tendrá las opciones que yo deseé
         JMenu menuArchivo = new JMenu("Estructura de Datos");
@@ -92,19 +97,29 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         setJMenuBar(menuBar);   
 
 
+        /**
+         * -------------------------------------------------------------------------------------------------------------------------
+         * Mi segunda sección del menú (Opciones para seleccionar funciones adicionales)
+         * -------------------------------------------------------------------------------------------------------------------------
+         */
         JMenu menuFuncionesAdicionales = new JMenu("Funciones Adicionales");
             //Cambio el estilo del texto
             menuFuncionesAdicionales.setFont(fuenteItemsMenu);
             //Opciones disponibles del menú:
-            JMenuItem ordenarListaItem = new JMenuItem("Ordenar Lista");   //Opción para ordenar la lista
-            // Cambiar el tamaño del botón
-            ordenarListaItem.setPreferredSize(new Dimension(120,25));
-            // Cambiar la fuente del texto del botón
-            ordenarListaItem.setFont(fuenteItemsMenu);
-            // Cambiar el color del texto del botón
-            ordenarListaItem.setForeground(coloritemsMenu);
-            // Agregar el botón al menu
-            menuFuncionesAdicionales.add(ordenarListaItem);
+            JMenuItem ordenarListaCrecienteItem = new JMenuItem("Ordenar Lista (Creciente)");   //Opción para ordenar la lista de forma creciente 
+            JMenuItem ordenarListaDecrecienteItem = new JMenuItem("Ordenar Lista (Decreciente)");   //Opción para ordenar la lista de forma decreciente
+            
+            JMenuItem [] itemsMenuEspecial = {ordenarListaCrecienteItem, ordenarListaDecrecienteItem};
+            for (int i = 0; i < itemsMenuEspecial.length; i++) {
+                // Cambiar el tamaño del botón
+                itemsMenuEspecial[i].setPreferredSize(new Dimension(210,25));
+                // Cambiar la fuente del texto del botón
+                itemsMenuEspecial[i].setFont(fuenteItemsMenu);
+                // Cambiar el color del texto del botón
+                itemsMenuEspecial[i].setForeground(coloritemsMenu);
+                // Agregar el botón al menu
+                menuFuncionesAdicionales.add(itemsMenuEspecial[i]);
+            }
 
         menuBar.add(menuFuncionesAdicionales);
 
@@ -120,9 +135,6 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
         JButton botonBuscar = new JButton("Buscar");
         JButton botonEliminar = new JButton("Eliminar");
         JButton botonVaciar = new JButton("Vaciar");
-        
-        Color[] coloresFondoBotones = {Color.GREEN, Color.BLUE, Color.RED,Color.BLUE }; // Colores de fondo
-        Color[] coloresTextoBotones = {Color.BLACK, Color.WHITE, Color.WHITE, Color.WHITE}; // Colores de texto
 
         JButton [] botonesPanelLista = {botonInsertar, botonBuscar, botonEliminar, botonVaciar};
         for (int i = 0; i < botonesPanelLista.length; i++) {
@@ -130,8 +142,6 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             botonesPanelLista[i].setBounds(x_Inicial+anchoBoton*i,y_Boton,anchoBoton,altoBoton);
             // Cambiar la fuente del texto del botón del panel lista
             botonesPanelLista[i].setFont(fuenteGrande);
-            botonesPanelLista[i].setBackground(coloresFondoBotones[i]);
-            botonesPanelLista[i].setForeground(coloresTextoBotones[i]);
             // Agregar el botón al panel
             add(botonesPanelLista[i]);
         }
@@ -171,6 +181,25 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
 
         //Lo agrego al JFrame
         add(contenidoEstructura);
+
+
+        /**
+         * -------------------------------------------------------------------------------------------------------------------------
+         * Panel del árbol
+         * -------------------------------------------------------------------------------------------------------------------------
+         */
+
+
+         // Crear el panel de dibujo
+         panelArbol panelArbol = new panelArbol(arbol);
+
+         // Crear el JFrame y agregar el panel dentro de un JScrollPane
+         JFrame frame = new JFrame("Árbol Binario");
+         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         frame.setBounds(0, 5*altoMonitor/12-7, anchoMonitor, 7*altoMonitor/12);
+        //  frame.setSize(800, 600);
+         frame.add(new JScrollPane(panelArbol));
+         frame.setVisible(true);
 
         /**
          * -------------------------------------------------------------------------------------------------------------------------
@@ -240,6 +269,8 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                             arbol.insertar(num);
                             contenidoEstructura.setText(arbol.mostrar());
                         }
+                        frame.setVisible(false);
+                        frame.setVisible(true);
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -285,6 +316,9 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                                 JOptionPane.showMessageDialog(null, "El valor '" + num + "' NO se encuentra en la lista.");
                             }
                         }
+                        //Esto se hace para refrescar el frame de mi árbol
+                        frame.setVisible(false);
+                        frame.setVisible(true);
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -337,6 +371,9 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                                 "' NO se encuentra en el árbol, por lo que no puede ser eliminado.");
                             }
                         }
+                        //Esto se hace para refrescar el frame de mi árbol
+                        frame.setVisible(false);
+                        frame.setVisible(true);
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -383,6 +420,9 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
                             arbol.vaciar();
                             contenidoEstructura.setText(arbol.mostrar());
                         }
+                        //Esto se hace para refrescar el frame de mi árbol
+                        frame.setVisible(false);
+                        frame.setVisible(true);
                     }
                 }
             }else{  //No seleccionamos una estructura
@@ -391,45 +431,67 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             fieldIngresarDatos.setText(null);
         });
 
-        //Para el botón de Ordenar (la lista):
-        ordenarListaItem.addActionListener(e -> {
-            if(this.estructuraSeleccionada){    //Comprueba que seleccionamos una estructura
-                if(this.listaActiva){
-                    if(lista.esVacio()){
-                        JOptionPane.showMessageDialog(null, "La Lista se encuentra vacía.");
-                    }else{
-                        // lista.ordenar();
-                        JOptionPane.showMessageDialog(null, "La lista ha sido ordenada.");
-                    }
+        /**
+         * Método: ordenarListaCrecienteItem
+         * Propósito: Ordenar la lista de forma creciente
+         * Funcionamiento:
+         *      - Verifica si tengo la lista seleccionada
+         *      - Verifica si la lista se encuentra vacía
+         *      - Ordena la lista
+         *      - Muestra el estado actual de mi lista
+         */
+        ordenarListaCrecienteItem.addActionListener(e -> {
+            if(this.estructuraSeleccionada && this.listaActiva){    //Comprueba que seleccionamos la lista
+                if(lista.esVacio()){
+                    JOptionPane.showMessageDialog(null, "La Lista se encuentra vacía.");
+                }else{
+                    String listaDesordenada = lista.mostrar(); //Previo al ordenamiento
+                    lista.ordenarCreciente();   //La ordeno 
+                    contenidoEstructura.setText(
+                                                "Lista Desordenada: \n" + 
+                                                listaDesordenada + 
+                                                "\n Lista Ordenada: \n" + 
+                                                lista.mostrar()
+                                                );
                 }
             }else{  //No seleccionamos una estructura
-                JOptionPane.showMessageDialog(null, "Seleccione la lista para poder aplicar el método.");
+                JOptionPane.showMessageDialog(null, "Seleccione la lista para poder aplicar el método de ordenamiento.");
+            }
+            fieldIngresarDatos.setText(null);
+        });
+
+        /**
+         * Método: ordenarListaDecrecienteItem
+         * Propósito: Ordenar la lista de forma decreciente
+         * Funcionamiento:
+         *      - Verifica si tengo la lista seleccionada
+         *      - Verifica si la lista se encuentra vacía
+         *      - Ordena la lista
+         *      - Muestra el estado actual de mi lista
+         */
+        ordenarListaDecrecienteItem.addActionListener(e -> {
+            if(this.estructuraSeleccionada && this.listaActiva){    //Comprueba que seleccionamos la lista
+                if(lista.esVacio()){
+                    JOptionPane.showMessageDialog(null, "La Lista se encuentra vacía.");
+                }else{
+                    String listaDesordenada = lista.mostrar(); //Previo al ordenamiento
+                    lista.ordenarDecreciente();   //La ordeno 
+                    contenidoEstructura.setText(
+                                                "Lista Desordenada: \n" + 
+                                                listaDesordenada + 
+                                                "\n Lista Ordenada: \n" + 
+                                                lista.mostrar()
+                                                );
+                }
+            }else{  //No seleccionamos una estructura
+                JOptionPane.showMessageDialog(null, "Seleccione la lista para poder aplicar el método de ordenamiento.");
             }
             fieldIngresarDatos.setText(null);
         });
 
 
     }
-    /**
-     * Método: main
-     * Propósito: Inicializar mi lista, árbol, ventana y hacerla visible para poder utilizarla
-     * Parámetros de entrada:
-     *      - String[] args
-     * Parámetros de salida:
-     *      - null
-     */
-    public static void main(String[] args){
-        //Creo mi lista
-        Lista lista = new Lista();
-        //Creo mi árbol
-        Arbol arbol = new Arbol();
 
-        //Creo el objeto ventana
-        Interfaz ventana = new Interfaz(lista, arbol);
-        
-        //Hago mi ventana visible
-        ventana.setVisible(true);
-    }
     /**
      * Método: conversionValida
      * Propósito: Determinar si una conversión de texto a int es válida o no
@@ -447,5 +509,26 @@ public class Interfaz extends JFrame {//Heredo la clase JFrame
             JOptionPane.showMessageDialog(null, "Por favor ingrese un número entero.");
         }
         return conversionValida;
+    }
+
+    /**
+     * Método: main
+     * Propósito: Inicializar mi lista, árbol, ventana y hacerla visible para poder utilizarla
+     * Parámetros de entrada:
+     *      - String[] args
+     * Parámetros de salida:
+     *      - null
+     */
+    public static void main(String[] args){
+        //Creo mi lista
+        Lista lista = new Lista();
+        //Creo mi árbol
+        Arbol arbol = new Arbol();
+
+        //Creo el objeto ventana
+        Interfaz ventana = new Interfaz(lista, arbol);
+
+        //Hago mi ventana visible
+        ventana.setVisible(true);
     }
 }

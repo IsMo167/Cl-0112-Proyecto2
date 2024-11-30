@@ -149,4 +149,138 @@ public class Lista{
         return(textoLista);
     }
     
+
+
+    /**
+     * Método: detonarOrdenamientoCreciente
+     * Propósito: Verificar si mi lista está o no desordenada en orden creciente
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - boolean: Representa si está ordenada o no
+     */
+    public boolean detonarOrdenamientoCreciente(){
+        boolean listaDesordenada = false;
+        NodoLista nodoActual = this.cabeza;
+        while(nodoActual.getSiguiente() != null){
+            if(nodoActual.getValor() > nodoActual.getSiguiente().getValor()){
+                listaDesordenada = true;
+                return listaDesordenada;
+            }
+            nodoActual = nodoActual.getSiguiente();
+        }
+        return listaDesordenada;
+    }
+
+    /**
+     * Método: intercambiarNodosCreciente
+     * Propósito: Intercambiar los primeros dos nodos que no estén ordenados de forma creciente
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
+    public void intercambiarNodosCreciente(){
+        NodoLista nodo = this.cabeza;   //Empiezo a verificar en la cabeza
+        while(nodo.getSiguiente() != null){ 
+            if(nodo.getValor() > nodo.getSiguiente().getValor()){   //Hago el cambio de nodos
+                int valorTemporal = nodo.getValor();
+                nodo.setValor(nodo.getSiguiente().getValor());
+                nodo.getSiguiente().setValor(valorTemporal);
+            }
+            nodo = nodo.getSiguiente();
+        }
+    }
+
+    /**
+     * Método: ordenarCreciente
+     * Propósito: ordenar la lista en orden creciente de valores
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
+    public void ordenarCreciente(){
+        boolean listaDesordenada = detonarOrdenamientoCreciente(); //Verifico que mi lista esté desordenada
+        while(listaDesordenada){    //Mientras la lista esté desordenada
+            intercambiarNodosCreciente();   //Intercambio los primeros dos nodos que no estén en posición
+            listaDesordenada = detonarOrdenamientoCreciente();  //Compruebo que siga desordenada
+        }
+    }
+
+    /**
+     * Método: detonarOrdenamientoDecreciente
+     * Propósito: Verificar si mi lista está o no desordenada en orden decreciente
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - boolean: Representa si está ordenada o no
+     */
+    public boolean detonarOrdenamientoDecreciente(){
+        boolean listaDesordenada = false;
+        NodoLista nodoActual = this.cabeza;
+        while(nodoActual.getSiguiente() != null){
+            if(nodoActual.getValor() < nodoActual.getSiguiente().getValor()){
+                listaDesordenada = true;
+                return listaDesordenada;
+            }
+            nodoActual = nodoActual.getSiguiente();
+        }
+        return listaDesordenada;
+    }
+
+    /**
+     * Método: intercambiarNodosDecreciente
+     * Propósito: Intercambiar los primeros dos nodos que no estén ordenados de forma decreciente
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
+    public void intercambiarNodosDecreciente(){
+        NodoLista nodo = this.cabeza;   //Empiezo a verificar en la cabeza
+        while(nodo.getSiguiente() != null){ 
+            if(nodo.getValor() < nodo.getSiguiente().getValor()){   //Hago el cambio de nodos
+                int valorTemporal = nodo.getValor();
+                nodo.setValor(nodo.getSiguiente().getValor());
+                nodo.getSiguiente().setValor(valorTemporal);
+            }
+            nodo = nodo.getSiguiente();
+        }
+    }
+
+    /**
+     * Método: ordenarDcCreciente
+     * Propósito: ordenar la lista en orden decreciente de valores
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - null
+     */
+    public void ordenarDecreciente(){
+        boolean listaDesordenada = detonarOrdenamientoDecreciente(); //Verifico que mi lista esté desordenada
+        while(listaDesordenada){    //Mientras la lista esté desordenada
+            intercambiarNodosDecreciente();   //Intercambio los primeros dos nodos que no estén en posición
+            listaDesordenada = detonarOrdenamientoDecreciente();  //Compruebo que siga desordenada
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Lista lista1 = new Lista();
+        lista1.insertar(7);
+        lista1.insertar(4);
+        lista1.insertar(6);
+        lista1.insertar(1);
+        lista1.insertar(10);
+        System.out.println("Lista Desordenada: " + lista1.detonarOrdenamientoCreciente());
+        System.out.println(lista1.mostrar());
+        //Lista desordenada:
+        //10  ->  1  ->  6  ->  4  ->  7
+        lista1.ordenarCreciente();
+        System.out.println("Lista Desordenada: " + lista1.detonarOrdenamientoCreciente());
+        System.out.println(lista1.mostrar());
+
+  
+    }
 }

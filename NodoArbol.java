@@ -41,5 +41,17 @@ public class NodoArbol {
     public void setHijoDerecho(NodoArbol hijoDerecho) {
         this.hijoDerecho = hijoDerecho;
     }
+
+    /**
+     * Método: toString
+     * Propósito: Regresarme el valor de mi nodo como un String
+     * Parámetros de entrada:
+     *      - null
+     * Parámetros de salida:
+     *      - String: Valor de mi nodo en formato de String
+     */
+    public String toString() {
+        return  String.valueOf(this.valor);
+    }
 }
  
